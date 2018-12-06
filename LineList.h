@@ -88,6 +88,34 @@ public:
 			throw LineListException();
 	}
 
+	LineListElem<T>* getPointer(const T& adata)
+		{
+			LineListElem<T>* ptr = start;
+			while (ptr && ptr->next)
+			{
+				if (ptr->next->data == adata)
+					return ptr->next;
+				ptr = ptr->next;
+			}
+			throw LineListException();
+			return 0;
+		}
+
+	LineListElem<T>* getPoint(const int& i)
+	{
+		LineListElem<T>* ptr = start;
+		int j = 0;
+		while (ptr->next)
+		{
+			if (j == i)
+				return ptr;
+			ptr = ptr->next;
+			j++;
+		}
+		throw LineListException();
+		return 0;
+	}
+
 	template <class T> friend ostream &operator<<(ostream &out, const LineList<T> &list)
 	{
 		LineListElem<T>* ptr = list.start;
@@ -99,6 +127,12 @@ public:
 				out << ptr->getData() << ' ';
 				ptr = ptr->getNext();
 			}
+		return out;
+	}
+
+	template <class T> friend ostream &operator<<(ostream &out, const LineListElem<T>* pointer)
+	{
+		out << pointer;
 		return out;
 	}
 };
